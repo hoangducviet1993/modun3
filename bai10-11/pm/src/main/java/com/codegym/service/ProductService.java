@@ -9,7 +9,9 @@ public interface ProductService {
 
     void save(Product product);
 
-    int findIndexOfProductId(String id);
+    int findIndexOfById(int id);
+
+    Product findById(int id);
 
     List<Product> findByName(String name);
 
