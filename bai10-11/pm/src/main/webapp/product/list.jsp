@@ -17,8 +17,9 @@
 
 <c:forEach items='${danhSach}' var="sanPham">
     <h3>${sanPham.id},${sanPham.name},${sanPham.price}
-        <a href="/products?action=edit&id=${sanPham.id}">Sửa</a>
-        <a href="/products?action=delete&id=${sanPham.id}">Xóa</a>
+        <button><a href="/products?action=edit&id=${sanPham.id}">Sửa</a></button>
+        <a href="products?action=remove&id=${product.getId()}"
+           onclick="return confirm('Are you sure to delete product ${product.getName()}?')">Delete</a>
     </h3>
 </c:forEach>
 
