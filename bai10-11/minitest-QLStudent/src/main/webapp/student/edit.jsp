@@ -12,7 +12,7 @@
 </head>
 <body>
 <form method="post">
-    <input type="number" name="id" value="${hsCanSua.id}">
+    <input type="text" name="id" value="${hsCanSua.id}">
     <input type="text" name="name" value="${hsCanSua.name}">
     <input type="text" name="mathScore" value="${hsCanSua.mathScore}">
     <input type="text" name="physicsScore" value="${hsCanSua.physicsScore}">

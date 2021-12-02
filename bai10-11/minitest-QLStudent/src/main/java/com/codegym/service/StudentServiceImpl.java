@@ -52,9 +52,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void update(int id, Student student) {
-        students.remove(findIndexOfById(id));
-        students.set(id,student);
+    public void update(int id, Student student) {`
+        students.set(findIndexOfById(id),student);
     }
 
     @Override

@@ -65,13 +65,15 @@ public class StudentServlet extends HttpServlet {
     }
 
     private void editProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<Student> list = studentService.findAll();
         int id = Integer.parseInt(request.getParameter("id"));
+//        int id1 = studentService.findIndexOfById(id);
         double mathScore = Double.parseDouble(request.getParameter("mathScore"));
         double physicsScore = Double.parseDouble(request.getParameter("physicsScore"));
         double chemistryScore = Double.parseDouble(request.getParameter("chemistryScore"));
         String name = request.getParameter("name");
-//        int id1 = studentService.findIndexOfById(id);
-        studentService.update(id, new Student(id, name, mathScore, physicsScore, chemistryScore));
+        int index = studentService.findIndexOfById(id);
+        studentService.update(index, new Student(id, name, mathScore, physicsScore, chemistryScore));
         response.sendRedirect("/students");
 
     }
