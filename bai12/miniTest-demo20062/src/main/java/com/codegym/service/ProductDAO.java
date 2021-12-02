@@ -67,13 +67,42 @@ public class ProductDAO implements IProductDAO {
     }
 
     @Override
-    public List<Product> findByName(String name) {
-        return null;
+    public List<Product> findByName(String key) {
+        List<Product> products = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from product where name like ?");) {
+            System.out.println(preparedStatement);
+            preparedStatement.setString(1,"%"+key+"%");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int price = Integer.parseInt(rs.getString("price"));
+                int quantity = Integer.parseInt(rs.getString("quantity"));
+                products.add(new Product(id, name, price, quantity));
+            }
+        } catch (SQLException e) {
+        }
+        return products;
     }
 
     @Override
     public List<Product> findAllOderByQuantity() {
-        return null;
+        List<Product> products = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from product order by quantity");) {
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int price = Integer.parseInt(rs.getString("price"));
+                int quantity = Integer.parseInt(rs.getString("quantity"));
+                products.add(new Product(id, name, price, quantity));
+            }
+        } catch (SQLException e) {
+        }
+        return products;
     }
 
     @Override

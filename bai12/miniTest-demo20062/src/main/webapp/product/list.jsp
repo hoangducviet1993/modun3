@@ -26,7 +26,7 @@
 <p><a href="/products">Back to list</a></p>
 <p>
 <form method="get" action="/products">
-    <input type="text" name="nameFind"> <button>Find by name</button>
+    <input type="text" name="key"> <button>Find by name</button>
 </form></p>
 <table border="1" cellpadding="5">
     <caption><h2>List of products</h2></caption>

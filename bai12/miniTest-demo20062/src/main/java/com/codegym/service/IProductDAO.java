@@ -12,7 +12,7 @@ public interface IProductDAO {
 
     List<Product> findAll();
 
-    List<Product> findByName(String name);
+    List<Product> findByName(String key);
 
     List<Product> findAllOderByQuantity();
 
