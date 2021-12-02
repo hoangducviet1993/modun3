@@ -45,8 +45,8 @@
             <td>${product.name}</td>
             <td>${product.price}</td>
             <td>${product.quantity}</td>
-            <td><a href="/products?action=edit&id=${product.id}">Edit</a></td>
-            <td><a href="/products?action=delete&id=${product.id}">Delete</a></td>
+            <td><a href="/products?act=edit&id=${product.id}">Edit</a></td>
+            <td><a href="/products?act=delete&id=${product.id}">Delete</a></td>
 <%--            <td><a href="/products?action=view&id=${product.id}">View</a></td>--%>
         </tr>
     </c:forEach>

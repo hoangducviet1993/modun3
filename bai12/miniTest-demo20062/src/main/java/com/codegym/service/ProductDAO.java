@@ -27,7 +27,7 @@ public class ProductDAO implements IProductDAO {
 
     @Override
     public void add(Product product) throws SQLException {
-        List<Product> products = new ArrayList<>();
+//        List<Product> products = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("insert into product(id, name, price, quantity) value (?, ?, ?, ?)");) {
             System.out.println(preparedStatement);
@@ -38,8 +38,6 @@ public class ProductDAO implements IProductDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
         }
-
-
     }
 
     @Override
@@ -107,7 +105,12 @@ public class ProductDAO implements IProductDAO {
 
     @Override
     public boolean delete(int id) throws SQLException {
-        return false;
+        boolean rowDeleted;
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement("delete from product where id = ?;");) {
+            statement.setInt(1, id);
+            rowDeleted = statement.executeUpdate() > 0;
+        }
+        return rowDeleted;
     }
 
     @Override

@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,18 +29,59 @@ public class ProductServlet extends HttpServlet {
             case "orderByQuantity":
                 showProductOrder(request, response);
                 break;
+            case "delete":
+                try {
+                    deleteProduct(request, response);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "update":
+                showEditForm(request,response);
+                break;
             default:
                 showListProduct(request, response);
         }
     }
 
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("act");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "create":
+                try {
+                    createProduct(request,response);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
-    private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
+    }
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        productDAO.delete(id);
+        response.sendRedirect("/products");
+    }
+
+
+    private void createProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        int price = Integer.parseInt(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        productDAO.add(new Product(id, name, price, quantity));
+        response.sendRedirect("/products");
+    }
+
+    private void showCreateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/create.jsp");
+        requestDispatcher.forward(request, response);
     }
     private void showProductOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/list.jsp");
