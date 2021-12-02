@@ -21,8 +21,8 @@
 </head>
 <body>
 <h1>Product Management</h1>
-<p><a href="/products?action=create">Create a product</a></p>
-<p><a href="/products?action=orderByQuantity">Order product by quantity</a></p>
+<p><a href="/products?act=create">Create a product</a></p>
+<p><a href="/products?act=orderByQuantity">Order product by quantity</a></p>
 <p><a href="/products">Back to list</a></p>
 <p>
 <form method="get" action="/products">
