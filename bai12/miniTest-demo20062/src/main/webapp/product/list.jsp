@@ -47,7 +47,9 @@
             <td>${product.quantity}</td>
             <td><a href="/products?act=edit&id=${product.id}">Edit</a></td>
             <td><a href="/products?act=delete&id=${product.id}">Delete</a></td>
-<%--            <td><a href="/products?action=view&id=${product.id}">View</a></td>--%>
+            <td> <a onclick="return confirm('Are you sure?')"
+                    href="/products?act=delete1&id=${product.id}">delete1</a></td>
+
         </tr>
     </c:forEach>
 </table>
