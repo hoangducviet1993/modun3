@@ -4,7 +4,9 @@ import com.codegym.model.Product;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO implements IProductDAO {
@@ -28,6 +30,18 @@ public class ProductDAO implements IProductDAO {
 
     @Override
     public void add(Product product) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("insert into product(id, name, price, quantity) value (?, ?, ?, ?)");) {
+            System.out.println(preparedStatement);
+            preparedStatement.setInt(1, product.getId());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setInt(3, product.getPrice());
+            preparedStatement.setInt(4, product.getQuantity());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+        }
+
 
     }
 

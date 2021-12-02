@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <a href="/products">ÉO thích tên</a>
   </body>
 </html>
