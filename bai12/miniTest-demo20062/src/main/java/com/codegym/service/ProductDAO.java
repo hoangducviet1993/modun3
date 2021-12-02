@@ -42,7 +42,23 @@ public class ProductDAO implements IProductDAO {
 
     @Override
     public Product findByID(int id) {
-        return null;
+        Product product = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from product where id = ?");) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("name");
+                int price = Integer.parseInt(rs.getString("price"));
+                int quantity = Integer.parseInt(rs.getString("quantity"));
+                product = new Product(id, name, price, quantity);
+            }
+        } catch (SQLException e) {
+//            printSQLException(e);
+        }
+        return product;
+
     }
 
     @Override
@@ -70,7 +86,7 @@ public class ProductDAO implements IProductDAO {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("select * from product where name like ?");) {
             System.out.println(preparedStatement);
-            preparedStatement.setString(1,"%"+key+"%");
+            preparedStatement.setString(1, "%" + key + "%");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -112,9 +128,27 @@ public class ProductDAO implements IProductDAO {
         }
         return rowDeleted;
     }
+    @Override
+    public void delete1(int id) {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from product where id = ?");) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
 
     @Override
     public boolean update(Product product) throws SQLException {
-        return false;
+        boolean rowUpdated;
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement("update product set name = ?,price= ?, quantity=? where id = ?;");) {
+            statement.setString(1, product.getName());
+            statement.setInt(2, product.getPrice());
+            statement.setInt(3, product.getQuantity());
+            statement.setInt(4, product.getId());
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
     }
 }
