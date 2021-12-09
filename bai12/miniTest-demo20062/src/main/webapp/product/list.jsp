@@ -42,7 +42,7 @@
     <c:forEach var="product" items="${dsSP}">
         <tr>
             <td>${product.id}</td>
-            <td>${product.name}</td>
+            <td>${product.name}</td>ư
             <td>${product.price}</td>
             <td>${product.quantity}</td>
             <td><a href="/products?act=edit&id=${product.id}">Edit</a></td>
